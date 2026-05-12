@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bobby's Business Guide — AI Use Case Playbook</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --acc:#10a37f;--acc-dark:#0d8c6d;--acc-light:#ecfdf5;
+  --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;
+  --gray-300:#d1d5db;--gray-500:#6b7280;--gray-600:#4b5563;
+  --gray-700:#374151;--gray-900:#111827;
+  --amber:#f59e0b;--blue:#3b82f6;--purple:#8b5cf6;--red:#ef4444
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--gray-900);line-height:1.6;background:#fff}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--gray-200);padding:0 20px;height:58px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.nav-brand{font-size:13px;font-weight:800;letter-spacing:.5px;white-space:nowrap}
+.nav-tabs{display:flex;gap:4px;overflow-x:auto}
+.nav-tab{padding:6px 14px;border-radius:6px;font-size:13px;font-weight:500;color:var(--gray-600);cursor:pointer;border:none;background:transparent;transition:all .15s;white-space:nowrap}
+.nav-tab:hover{background:var(--gray-100);color:var(--gray-900)}
+.nav-tab.active{background:var(--gray-900);color:#fff}
+.nav-right{display:flex;align-items:center;gap:8px}
+.client-input{padding:6px 11px;border:1px solid var(--gray-300);border-radius:8px;font-size:13px;width:150px;outline:none}
+.client-input:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(16,163,127,.1)}
+.client-badge{background:var(--acc);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;display:none;white-space:nowrap}
+.main{margin-top:58px}
+.page{display:none;padding:40px 24px;max-width:920px;margin:0 auto}
+.page.active{display:block}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#060606 0%,#0f172a 60%,#111827 100%);color:#fff;padding:72px 24px 64px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 65% 40%,rgba(16,163,127,.18) 0%,transparent 65%);pointer-events:none}
+.hero-inner{position:relative;max-width:680px;margin:0 auto}
+.hero-chip{display:inline-block;border:1px solid rgba(16,163,127,.45);background:rgba(16,163,127,.12);color:#6ee7b7;padding:5px 15px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:22px}
+.hero h1{font-size:clamp(30px,5vw,52px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:14px}
+.hero h1 em{color:#6ee7b7;font-style:normal}
+.hero-sub{font-size:17px;color:rgba(255,255,255,.65);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:580px;margin:0 auto 36px}
+.stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:18px 12px}
+.stat-n{font-size:34px;font-weight:800;color:#6ee7b7;display:block;line-height:1}
+.stat-l{font-size:11px;color:rgba(255,255,255,.55);margin-top:5px;line-height:1.4}
+.client-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:18px 24px;display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center}
+.client-box label{font-size:14px;color:rgba(255,255,255,.75)}
+.hero-inp{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:8px 13px;color:#fff;font-size:14px;width:190px;outline:none}
+.hero-inp::placeholder{color:rgba(255,255,255,.35)}
+.hero-btn{background:var(--acc);border:none;color:#fff;padding:9px 20px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:background .15s;white-space:nowrap}
+.hero-btn:hover{background:var(--acc-dark)}
+
+/* SHARED */
+.sec-head{margin-bottom:28px}
+.sec-head h2{font-size:26px;font-weight:800;margin-bottom:6px}
+.sec-head p{color:var(--gray-500);font-size:15px}
+.step-pill{display:inline-flex;align-items:center;gap:7px;background:var(--gray-900);color:#fff;padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:18px}
+.card{background:#fff;border:1px solid var(--gray-200);border-radius:14px;padding:24px;margin-bottom:18px}
+.card:hover{box-shadow:0 4px 18px rgba(0,0,0,.07)}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.pain-card{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:12px;padding:18px}
+.pain-card h4{font-size:14px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:7px}
+.pain-card p{font-size:13px;color:var(--gray-500)}
+.pain-eg{font-size:11px;background:var(--gray-200);padding:3px 8px;border-radius:6px;display:inline-block;margin-top:6px;color:var(--gray-700)}
+.prompt-wrap{background:var(--gray-900);border-radius:12px;padding:20px;margin-top:16px;position:relative}
+.prompt-wrap::before{content:'Prompt';position:absolute;top:-10px;left:14px;background:var(--acc);color:#fff;padding:2px 9px;border-radius:8px;font-size:10px;font-weight:700}
+.prompt-code{color:#6ee7b7;font-family:monospace;font-size:14px;line-height:1.7}
+.checklist{margin-top:14px}
+.check-item{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:#fff;border:1px solid var(--gray-200);border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .15s;user-select:none}
+.check-item:hover{border-color:var(--acc)}
+.check-item.done{background:var(--acc-light);border-color:var(--acc)}
+.check-box{width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid var(--gray-300);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all .15s;color:transparent}
+.check-item.done .check-box{background:var(--acc);border-color:var(--acc);color:#fff}
+.check-text{font-size:13px;color:var(--gray-700);line-height:1.5}
+.prog-wrap{margin-top:10px}
+.prog-bar{background:var(--gray-200);border-radius:10px;height:5px;overflow:hidden}
+.prog-fill{background:var(--acc);height:100%;border-radius:10px;width:0;transition:width .3s}
+.prog-label{font-size:11px;color:var(--gray-500);text-align:right;margin-top:4px}
+.quote-card{background:var(--gray-900);color:#fff;border-radius:14px;padding:24px;margin-top:18px}
+.quote-text{font-size:16px;font-style:italic;line-height:1.65;margin-bottom:10px}
+.quote-by{font-size:12px;color:rgba(255,255,255,.5)}
+
+/* PRIMITIVES */
+.prim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:20px}
+.prim-card{border:1px solid var(--gray-200);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .18s,box-shadow .18s}
+.prim-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.1)}
+.prim-head{padding:18px}
+.prim-num{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.55;margin-bottom:2px}
+.prim-icon{font-size:26px;margin-bottom:4px}
+.prim-title{font-size:15px;font-weight:700}
+.prim-body{padding:0 18px;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease}
+.prim-body.open{max-height:700px;padding:16px 18px 18px}
+.prim-desc{font-size:13px;color:var(--gray-600);margin-bottom:12px}
+.risk-box{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 12px;margin-bottom:12px}
+.risk-box-title{font-size:10px;font-weight:700;color:#991b1b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.risk-box-text{font-size:12px;color:#7f1d1d;line-height:1.5}
+.dept-nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.dept-btn{padding:3px 11px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid var(--gray-300);cursor:pointer;background:#fff;transition:all .15s;color:var(--gray-600)}
+.dept-btn.active{background:var(--gray-900);color:#fff;border-color:transparent}
+.dept-panel{display:none;font-size:12px;color:var(--gray-700);background:var(--gray-50);padding:10px 12px;border-radius:8px}
+.dept-panel.active{display:block}
+.dept-panel ul{padding-left:14px}
+.dept-panel li{margin-bottom:3px}
+
+/* PRIORITIZE MATRIX */
+.ax-label{font-size:11px;color:var(--gray-500);text-align:center;margin-bottom:6px}
+.matrix{display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:2px solid var(--gray-200);margin-bottom:6px}
+.quad{padding:22px 18px;min-height:160px}
+.quad-sub{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px;opacity:.7}
+.quad-title{font-size:17px;font-weight:800;margin-bottom:6px}
+.quad-desc{font-size:12px;line-height:1.5}
+.q1{background:#ecfdf5;border-right:1px solid var(--gray-200);border-bottom:1px solid var(--gray-200)}
+.q1 .quad-sub,.q1 .quad-title,.q1 .quad-desc{color:#065f46}
+.q2{background:#fff7ed;border-bottom:1px solid var(--gray-200)}
+.q2 .quad-sub,.q2 .quad-title,.q2 .quad-desc{color:#92400e}
+.q3{background:#eff6ff;border-right:1px solid var(--gray-200)}
+.q3 .quad-sub,.q3 .quad-title,.q3 .quad-desc{color:#1e40af}
+.q4{background:#fef2f2}
+.q4 .quad-sub,.q4 .quad-title,.q4 .quad-desc{color:#991b1b}
+.ax-row{display:flex;justify-content:space-between;font-size:11px;color:var(--gray-500);padding:0 2px}
+
+/* IMPLEMENTATION COST ESTIMATOR */
+.impl-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.impl-field label{font-size:11px;font-weight:700;color:var(--gray-600);display:block;margin-bottom:3px}
+.impl-field select{width:100%;padding:8px 10px;border:1px solid var(--gray-300);border-radius:7px;font-size:13px;outline:none;background:#fff}
+.impl-field select:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(16,163,127,.1)}
+.impl-calc-btn{background:var(--acc);color:#fff;border:none;padding:10px 22px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:20px}
+.impl-calc-btn:hover{background:var(--acc-dark)}
+.impl-results{border-top:1px solid var(--gray-200);padding-top:18px}
+.impl-range-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.impl-range-item{border-radius:10px;padding:14px;text-align:center}
+.impl-range-item.low{background:#f0fdf4;border:1px solid #bbf7d0}
+.impl-range-item.mid{background:var(--gray-900);color:#fff}
+.impl-range-item.high{background:#fff7ed;border:1px solid #fed7aa}
+.impl-range-n{font-size:22px;font-weight:800}
+.impl-range-item.low .impl-range-n{color:#16a34a}
+.impl-range-item.mid .impl-range-n{color:#6ee7b7}
+.impl-range-item.high .impl-range-n{color:#ea580c}
+.impl-range-l{font-size:11px;margin-top:3px;opacity:.65}
+.impl-range-item.mid .impl-range-l{color:rgba(255,255,255,.6)}
+.impl-bk-title{font-size:12px;font-weight:700;color:var(--gray-600);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em}
+.impl-bk-bars{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.impl-bk-row{display:flex;align-items:center;gap:10px}
+.impl-bk-label{font-size:12px;color:var(--gray-700);width:170px;flex-shrink:0}
+.impl-bk-bar-wrap{flex:1;display:flex;align-items:center;gap:8px}
+.impl-bk-bar{height:8px;background:var(--acc);border-radius:4px;transition:width .4s}
+.impl-bk-pct{font-size:11px;color:var(--gray-500);width:28px}
+.impl-assume-title{font-size:12px;font-weight:700;color:var(--gray-600);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}
+.impl-assume-list{margin:0 0 18px 0;padding-left:18px}
+.impl-assume-list li{font-size:12px;color:var(--gray-500);margin-bottom:4px;line-height:1.5}
+.apply-roi-btn{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
+.apply-roi-btn:hover{background:#dcfce7}
+
+/* ROI ESTIMATOR */
+.roi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.roi-field label{font-size:11px;font-weight:700;color:var(--gray-600);display:block;margin-bottom:3px}
+.roi-field input{width:100%;padding:8px 10px;border:1px solid var(--gray-300);border-radius:7px;font-size:14px;outline:none}
+.roi-field input:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(16,163,127,.1)}
+.roi-results{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
+.roi-result{background:var(--gray-900);color:#fff;border-radius:10px;padding:14px;text-align:center}
+.roi-result-n{font-size:22px;font-weight:800;color:#6ee7b7}
+.roi-result-l{font-size:11px;color:rgba(255,255,255,.6);margin-top:3px}
+
+/* USE CASE TRACKER */
+.tracker-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.tracker-hd h3{font-size:17px;font-weight:700}
+.add-btn{background:var(--acc);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
+.add-btn:hover{background:var(--acc-dark)}
+.uc-form{background:var(--gray-50);border:1px solid var(--gray-200);border-radius:12px;padding:18px;margin-bottom:16px;display:none}
+.uc-form.open{display:block}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.form-row.full{grid-template-columns:1fr}
+.fg label{font-size:11px;font-weight:700;color:var(--gray-600);display:block;margin-bottom:3px}
+.fg input,.fg select,.fg textarea{width:100%;padding:7px 10px;border:1px solid var(--gray-300);border-radius:7px;font-size:13px;outline:none;font-family:inherit;background:#fff}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(16,163,127,.1)}
+.form-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.btn-cancel{background:#fff;border:1px solid var(--gray-300);color:var(--gray-700);padding:7px 14px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer}
+.btn-save{background:var(--acc);border:none;color:#fff;padding:7px 16px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer}
+.uc-list{display:flex;flex-direction:column;gap:8px}
+.uc-item{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--gray-200);border-radius:10px;padding:12px 14px}
+.uc-info{flex:1;min-width:0}
+.uc-name{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.uc-meta{font-size:11px;color:var(--gray-500);margin-top:2px}
+.uc-badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0}
+.bQW{background:#d1fae5;color:#065f46}
+.bHV{background:#dbeafe;color:#1e40af}
+.bSS{background:#fef3c7;color:#92400e}
+.bDF{background:#fee2e2;color:#991b1b}
+.uc-del{background:none;border:none;color:var(--gray-400);cursor:pointer;font-size:18px;line-height:1;flex-shrink:0;padding:2px 4px}
+.uc-del:hover{color:var(--red)}
+.empty-state{text-align:center;padding:36px;color:var(--gray-500);font-size:14px}
+
+/* MODEL SELECTION */
+.model-intro{font-size:14px;color:var(--gray-600);margin-bottom:24px;line-height:1.7}
+.decision-tree{margin-bottom:24px}
+.dt-step{display:flex;gap:14px;margin-bottom:10px;align-items:flex-start}
+.dt-q{background:var(--gray-900);color:#fff;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;min-width:220px}
+.dt-arrow{font-size:18px;color:var(--acc);margin-top:6px;flex-shrink:0}
+.dt-a{background:var(--acc-light);border:1px solid #a7f3d0;border-radius:8px;padding:8px 14px;font-size:13px;color:#065f46;flex:1}
+.dt-a strong{display:block;font-weight:700;margin-bottom:1px}
+.model-matrix{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:24px}
+.model-matrix th{background:var(--gray-900);color:#fff;padding:10px 12px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.model-matrix td{padding:10px 12px;border-bottom:1px solid var(--gray-200);vertical-align:top}
+.model-matrix tr:hover td{background:var(--gray-50)}
+.model-tier{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.tier-power{background:#ede9fe;color:#5b21b6}
+.tier-speed{background:#dbeafe;color:#1e40af}
+.tier-private{background:#fef3c7;color:#92400e}
+.tier-balanced{background:#d1fae5;color:#065f46}
+.scorer-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.scorer-item label{font-size:12px;font-weight:700;color:var(--gray-700);display:block;margin-bottom:4px}
+.scorer-item select{width:100%;padding:7px 10px;border:1px solid var(--gray-300);border-radius:7px;font-size:13px;outline:none;background:#fff}
+.scorer-item select:focus{border-color:var(--acc)}
+.scorer-result{background:var(--gray-900);color:#fff;border-radius:12px;padding:18px}
+.scorer-result h4{font-size:14px;font-weight:700;color:#6ee7b7;margin-bottom:8px}
+.scorer-result p{font-size:13px;color:rgba(255,255,255,.75);line-height:1.6}
+.scorer-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.scorer-badge{background:rgba(110,231,183,.15);border:1px solid rgba(110,231,183,.3);color:#6ee7b7;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
+
+/* WORKFLOW */
+.wf-step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--gray-100)}
+.wf-step:last-child{border-bottom:none}
+.wf-num{width:30px;height:30px;min-width:30px;border-radius:50%;background:var(--gray-900);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.wf-content h4{font-size:14px;font-weight:700;margin-bottom:3px}
+.wf-content p{font-size:13px;color:var(--gray-500)}
+.wf-tag{display:inline-block;background:var(--acc-light);color:var(--acc-dark);padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;margin-top:5px}
+
+/* BUILD/BUY/INTEGRATE */
+.bbi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.bbi-card{border-radius:12px;padding:18px;border:2px solid}
+.bbi-title{font-size:15px;font-weight:800;margin-bottom:6px}
+.bbi-when{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;opacity:.7}
+.bbi-list{font-size:12px;line-height:1.8;padding-left:14px}
+
+footer{background:var(--gray-900);color:rgba(255,255,255,.55);text-align:center;padding:18px;font-size:12px;margin-top:40px}
+footer span{color:rgba(255,255,255,.8)}
+footer a{color:rgba(255,255,255,.6);text-decoration:none}
+footer a:hover{color:#6ee7b7}
+
+@media(max-width:640px){
+  .stats,.roi-grid,.roi-results,.form-row,.bbi-grid,.scorer-grid{grid-template-columns:1fr}
+  .nav-tabs{display:none}
+  .matrix{grid-template-columns:1fr}
+  .dt-step{flex-direction:column;gap:4px}
+  .dt-q{min-width:0;width:100%}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">BOBBY'S BUSINESS GUIDE</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-page="home">Overview</button>
+    <button class="nav-tab" data-page="discover">Discover</button>
+    <button class="nav-tab" data-page="primitives">Primitives</button>
+    <button class="nav-tab" data-page="prioritize">Prioritize</button>
+    <button class="nav-tab" data-page="model">Model Selection</button>
+    <button class="nav-tab" data-page="workflow">Workflow</button>
+  </div>
+  <div class="nav-right">
+    <input class="client-input" id="navClient" placeholder="Client name...">
+    <span class="client-badge" id="clientBadge"></span>
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-chip">Bobby's Business Guide</div>
+    <h1>Identifying &amp; Scaling<br><em>AI Use Cases</em></h1>
+    <p class="hero-sub">A live client playbook &mdash; discover your opportunities, pick the right model, and build a roadmap that ships.</p>
+    <div class="stats">
+      <div class="stat"><span class="stat-n">39%</span><div class="stat-l">of U.S. adults already use AI &mdash; vs 20% internet adoption in same window</div></div>
+      <div class="stat"><span class="stat-n">1.5x</span><div class="stat-l">faster revenue growth for AI leaders vs peers (BCG, 2024)</div></div>
+      <div class="stat"><span class="stat-n">1%</span><div class="stat-l">of companies believe AI investments have reached full maturity (McKinsey)</div></div>
+    </div>
+    <div class="client-box">
+      <label>Personalize for your client:</label>
+      <input class="hero-inp" id="heroClient" placeholder="e.g. Acme Corp">
+      <button class="hero-btn" data-goto="discover">Start Session &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<div id="home" class="page active">
+  <div class="sec-head"><h2>How to use this playbook</h2><p>Four steps from blank slate to a prioritized AI roadmap with the right model for every use case.</p></div>
+  <div class="grid3">
+    <div class="pain-card" style="border-left:4px solid var(--acc)">
+      <h4>&#x1F50D; Step 1: Discover</h4>
+      <p>Map pain points across repetitive tasks, skill bottlenecks, and ambiguity to find where AI creates real value.</p>
+      <button class="hero-btn" style="margin-top:12px;font-size:12px" data-goto="discover">Go to Discover &rarr;</button>
+    </div>
+    <div class="pain-card" style="border-left:4px solid var(--amber)">
+      <h4>&#x1F9E0; Step 2: Primitives</h4>
+      <p>Teach teams the 6 fundamental use case types that apply to every role and department.</p>
+      <button class="hero-btn" style="margin-top:12px;font-size:12px;background:var(--amber)" data-goto="primitives">Go to Primitives &rarr;</button>
+    </div>
+    <div class="pain-card" style="border-left:4px solid var(--blue)">
+      <h4>&#x1F4C8; Step 3: Prioritize + ROI</h4>
+      <p>Score use cases on impact vs effort, then estimate the financial return to justify investment.</p>
+      <button class="hero-btn" style="margin-top:12px;font-size:12px;background:var(--blue)" data-goto="prioritize">Go to Prioritize &rarr;</button>
+    </div>
+    <div class="pain-card" style="border-left:4px solid var(--purple)">
+      <h4>&#x1F916; Step 4: Model Selection</h4>
+      <p>Match each use case to the right AI model. Not every task needs the same tool &mdash; pick smart.</p>
+      <button class="hero-btn" style="margin-top:12px;font-size:12px;background:var(--purple)" data-goto="model">Go to Model Selection &rarr;</button>
+    </div>
+  </div>
+  <div class="quote-card">
+    <div class="quote-text">&ldquo;This is a time when you should be getting benefits from AI and hope that your competitors are just playing around and experimenting.&rdquo;</div>
+    <div class="quote-by">&mdash; Erik Brynjolfsson, Stanford University</div>
+  </div>
+</div>
+
+<!-- DISCOVER -->
+<div id="discover" class="page">
+  <div class="step-pill">Step 1 &mdash; Discover</div>
+  <div class="sec-head"><h2>Finding AI Opportunities</h2><p>Focus on three universal pain point categories that signal high-value AI applications in any org.</p></div>
+  <div class="grid3">
+    <div class="pain-card"><h4>&#x1F995; Repetitive Low-Value Tasks</h4><p>Work that consumes time but doesn't need strategic thinking &mdash; the employee's "anti-to-do list."</p><span class="pain-eg">Data formatting, report gen, email drafts, meeting notes</span></div>
+    <div class="pain-card"><h4>&#x1F6AB; Skill Bottlenecks</h4><p>Projects stall waiting on another team &mdash; data science, design, legal, or dev.</p><span class="pain-eg">Waiting on data analysis, design assets, developer resources</span></div>
+    <div class="pain-card"><h4>&#x1F914; Navigating Ambiguity</h4><p>Open-ended challenges where getting started is the blocker. AI acts as a catalyst.</p><span class="pain-eg">Brainstorming, strategy drafts, market sizing, research</span></div>
+  </div>
+  <div class="card" style="margin-top:20px">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:14px">&#x1F4CB; Workshop Discovery Checklist</h3>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:14px">Run this at the start of a workshop. Ask teams to answer each question, then cluster results into themes.</p>
+    <div class="checklist" id="cl1">
+      <div class="check-item" data-cl="cl1"><div class="check-box"></div><div class="check-text"><strong>Anti-to-do list:</strong> What recurring tasks do you find annoying or wish you could hand off entirely?</div></div>
+      <div class="check-item" data-cl="cl1"><div class="check-box"></div><div class="check-text"><strong>Blockers:</strong> Where do you struggle to get started, or frequently stall on projects?</div></div>
+      <div class="check-item" data-cl="cl1"><div class="check-box"></div><div class="check-text"><strong>Skill gaps:</strong> What tasks require waiting on another team (design, data, dev, legal)?</div></div>
+      <div class="check-item" data-cl="cl1"><div class="check-box"></div><div class="check-text"><strong>Ambiguity:</strong> Where do projects stall because no one knows the first step?</div></div>
+      <div class="check-item" data-cl="cl1"><div class="check-box"></div><div class="check-text"><strong>Data graveyard:</strong> What data exists that no one has time to analyze or act on?</div></div>
+    </div>
+    <div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" id="prog-cl1"></div></div><div class="prog-label" id="lbl-cl1">0 of 5 completed</div></div>
+  </div>
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:6px">&#x1F4AC; Starter Prompt for Any Role</h3>
+    <div class="prompt-wrap"><div class="prompt-code">I am a [role] at [company name]. We are evaluating AI tools<br>to improve our workflows. What are the highest-impact use<br>cases for my role, and what type of AI model would suit each?</div></div>
+    <p style="font-size:12px;color:var(--gray-500);margin-top:10px">&#x1F4A1; Swap in the client's specific role and company. Follow up to go deeper on each suggestion.</p>
+  </div>
+  <div class="quote-card">
+    <div class="quote-text">&ldquo;Every time I do something I find annoying, I ask myself: how can I not have to do this again?&rdquo;</div>
+    <div class="quote-by">&mdash; Claire Vo, Chief Product &amp; Technology Officer, LaunchDarkly</div>
+  </div>
+</div>
+
+<!-- PRIMITIVES -->
+<div id="primitives" class="page">
+  <div class="step-pill">Step 2 &mdash; Teach</div>
+  <div class="sec-head"><h2>The 6 Use Case Primitives</h2><p>From 600+ real-world use cases, these 6 patterns cover nearly every AI application across every department. Click any card to explore department examples and risk flags.</p></div>
+  <div class="prim-grid" id="primGrid"></div>
+  <div class="quote-card" style="margin-top:24px">
+    <div class="quote-text">&ldquo;We formed an AI automation task force&hellip; We asked all team members to detail processes that could benefit from AI. We took that list and created a roadmap of projects to explore.&rdquo;</div>
+    <div class="quote-by">&mdash; Andrea Ellis, CFO, Fanatics Betting and Gaming</div>
+  </div>
+</div>
+
+<!-- PRIORITIZE -->
+<div id="prioritize" class="page">
+  <div class="step-pill">Step 3 &mdash; Prioritize</div>
+  <div class="sec-head"><h2>Impact / Effort Framework</h2><p>Score each use case against business value and implementation effort. Start with Quick Wins, plan High Value bets.</p></div>
+  <div class="ax-label">&#8593; Higher Impact &nbsp;&nbsp;&nbsp; Lower Impact &#8595;</div>
+  <div class="matrix">
+    <div class="quad q1"><div class="quad-sub">High Impact &bull; Low Effort</div><div class="quad-title">&#x1F3C6; Quick Wins</div><div class="quad-desc">Best place to start. Build momentum and demonstrate value fast.</div></div>
+    <div class="quad q2"><div class="quad-sub">High Impact &bull; High Effort</div><div class="quad-title">&#x1F451; High Value</div><div class="quad-desc">Transformational. Use Quick Wins to fund and justify these.</div></div>
+    <div class="quad q3"><div class="quad-sub">Low Impact &bull; Low Effort</div><div class="quad-title">&#x1F464; Self-Service</div><div class="quad-desc">Personal productivity wins. Spread virally once one person starts.</div></div>
+    <div class="quad q4"><div class="quad-sub">Low Impact &bull; High Effort</div><div class="quad-title">&#x23F0; Defer</div><div class="quad-desc">Park for now. Revisit quarterly &mdash; improving AI capabilities may change the calculus.</div></div>
+  </div>
+  <div class="ax-row"><span>Low Effort &rarr;</span><span>&rarr; High Effort</span></div>
+
+  <!-- IMPLEMENTATION COST ESTIMATOR -->
+  <div class="card" style="margin-top:24px">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:6px">&#x1F3D7; Implementation Cost Estimator</h3>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:18px">Answer 6 questions to generate a realistic cost range before you build the business case. Estimates assume US contractor rates ($100–$175/hr) or equivalent internal cost.</p>
+    <div class="impl-grid">
+      <div class="impl-field">
+        <label>Model deployment type</label>
+        <select id="impl-deploy">
+          <option value="api">Cloud API — OpenAI, Anthropic, Gemini, etc.</option>
+          <option value="enterprise">Enterprise API — Azure OpenAI, AWS Bedrock</option>
+          <option value="selfhost">Self-hosted open source — Llama, Mistral, Phi</option>
+          <option value="private">Private / on-premises</option>
+        </select>
+      </div>
+      <div class="impl-field">
+        <label>Use case complexity</label>
+        <select id="impl-complexity">
+          <option value="simple">Simple — single prompt, no integration</option>
+          <option value="moderate" selected>Moderate — RAG or 1–2 integrations</option>
+          <option value="complex">Complex — multi-step workflow, 3+ integrations</option>
+          <option value="enterprise">Enterprise — fine-tuning, custom architecture</option>
+        </select>
+      </div>
+      <div class="impl-field">
+        <label>Integration scope</label>
+        <select id="impl-integrations">
+          <option value="none">None — standalone tool</option>
+          <option value="light" selected>Light — 1–2 existing systems (CRM, Slack…)</option>
+          <option value="moderate">Moderate — 3–5 systems or data pipelines</option>
+          <option value="heavy">Heavy — legacy systems, custom APIs, real-time data</option>
+        </select>
+      </div>
+      <div class="impl-field">
+        <label>Data preparation needs</label>
+        <select id="impl-data">
+          <option value="none">None — no proprietary data required</option>
+          <option value="clean" selected>Existing structured data — minimal prep</option>
+          <option value="messy">Unstructured / messy data — cleanup required</option>
+          <option value="finetune">Fine-tuning dataset — labeling + training run</option>
+        </select>
+      </div>
+      <div class="impl-field">
+        <label>Compliance / security requirements</label>
+        <select id="impl-compliance">
+          <option value="standard" selected>Standard — no special requirements</option>
+          <option value="soc2">Moderate — SOC 2 / GDPR alignment</option>
+          <option value="hipaa">High — HIPAA / PCI / financial regulations</option>
+          <option value="gov">Government / classified</option>
+        </select>
+      </div>
+      <div class="impl-field">
+        <label>User interface required</label>
+        <select id="impl-ui">
+          <option value="none">None — backend / API only</option>
+          <option value="basic" selected>Basic — chat interface or simple form</option>
+          <option value="full">Full — custom product UI / dashboard</option>
+          <option value="mobile">Mobile application</option>
+        </select>
+      </div>
+    </div>
+    <button class="impl-calc-btn" onclick="calcImpl()">Calculate Implementation Cost &#x2192;</button>
+    <div class="impl-results" id="impl-results" style="display:none">
+      <div class="impl-range-row">
+        <div class="impl-range-item low"><div class="impl-range-n" id="impl-low">-</div><div class="impl-range-l">Conservative</div></div>
+        <div class="impl-range-item mid"><div class="impl-range-n" id="impl-mid">-</div><div class="impl-range-l">Most likely</div></div>
+        <div class="impl-range-item high"><div class="impl-range-n" id="impl-high">-</div><div class="impl-range-l">Complex scenario</div></div>
+      </div>
+      <div id="impl-breakdown"></div>
+      <div id="impl-assumptions"></div>
+      <button class="apply-roi-btn" onclick="applyToROI()">&#x2192; Apply &ldquo;Most likely&rdquo; estimate to ROI Calculator below</button>
+    </div>
+  </div>
+
+  <!-- ROI ESTIMATOR -->
+  <div class="card" style="margin-top:24px">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:6px">&#x1F4B0; ROI Estimator</h3>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px">Estimate the financial return for a use case to justify investment to leadership.</p>
+    <div class="roi-grid">
+      <div class="roi-field"><label>Hours saved per person / week</label><input type="number" id="roi-hrs" value="3" min="0" max="40"></div>
+      <div class="roi-field"><label>People affected</label><input type="number" id="roi-ppl" value="10" min="1"></div>
+      <div class="roi-field"><label>Fully-loaded hourly cost ($)</label><input type="number" id="roi-rate" value="75" min="1"></div>
+      <div class="roi-field"><label>One-time implementation cost ($)</label><input type="number" id="roi-impl" value="5000" min="0"></div>
+    </div>
+    <div class="roi-results">
+      <div class="roi-result"><div class="roi-result-n" id="roi-monthly">-</div><div class="roi-result-l">Monthly savings</div></div>
+      <div class="roi-result"><div class="roi-result-n" id="roi-annual">-</div><div class="roi-result-l">Annual savings</div></div>
+      <div class="roi-result"><div class="roi-result-n" id="roi-payback">-</div><div class="roi-result-l">Payback period</div></div>
+    </div>
+  </div>
+
+  <!-- USE CASE TRACKER -->
+  <div class="card">
+    <div class="tracker-hd"><h3>&#x1F4DD; Use Case Tracker</h3><button class="add-btn" id="addBtn">+ Add Use Case</button></div>
+    <div class="uc-form" id="ucForm">
+      <div class="form-row">
+        <div class="fg"><label>Use Case Name</label><input id="ucName" placeholder="e.g. Weekly report automation"></div>
+        <div class="fg"><label>Department</label><select id="ucDept"><option>Marketing</option><option>Finance</option><option>Product</option><option>Sales</option><option>Engineering</option><option>HR</option><option>Operations</option><option>Legal</option></select></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Impact (1=Minimal &rarr; 5=Transformational)</label><select id="ucImpact"><option value="5">5 &mdash; Transformational</option><option value="4">4 &mdash; High</option><option value="3" selected>3 &mdash; Medium</option><option value="2">2 &mdash; Low</option><option value="1">1 &mdash; Minimal</option></select></div>
+        <div class="fg"><label>Effort (1=Hours &rarr; 5=Quarters)</label><select id="ucEffort"><option value="1">1 &mdash; Hours</option><option value="2">2 &mdash; Days</option><option value="3" selected>3 &mdash; Weeks</option><option value="4">4 &mdash; Months</option><option value="5">5 &mdash; Quarters</option></select></div>
+      </div>
+      <div class="form-row full"><div class="fg"><label>Notes / Owner / Dependencies</label><textarea id="ucNotes" rows="2" placeholder="e.g. Owned by Marketing, needs CRM data access..."></textarea></div></div>
+      <div class="form-btns"><button class="btn-cancel" id="cancelBtn">Cancel</button><button class="btn-save" id="saveBtn">Save Use Case</button></div>
+    </div>
+    <div class="uc-list" id="ucList"><div class="empty-state">No use cases yet &mdash; click &ldquo;+ Add Use Case&rdquo; to get started.</div></div>
+  </div>
+</div>
+
+<!-- MODEL SELECTION -->
+<div id="model" class="page">
+  <div class="step-pill">Step 4 &mdash; Pick Your Model</div>
+  <div class="sec-head"><h2>AI Model Selection Framework</h2><p>Once you've discovered and prioritized your use cases, choose the right AI model for each. Not all tasks need the same tool &mdash; matching model to task drives cost, performance, and speed.</p></div>
+
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:14px">&#x1F333; Decision Tree: Which Model Tier?</h3>
+    <div class="decision-tree">
+      <div class="dt-step">
+        <div class="dt-q">&#x1F512; Does the data need to stay on-premises or in a private cloud?</div>
+        <div class="dt-arrow">&#x2192;</div>
+        <div class="dt-a"><strong>Open-source / self-hosted</strong>Llama, Mistral, Qwen, Phi &mdash; full data control, no external API calls</div>
+      </div>
+      <div class="dt-step">
+        <div class="dt-q">&#x26A1; Is speed and cost the primary constraint (high-volume, low-stakes tasks)?</div>
+        <div class="dt-arrow">&#x2192;</div>
+        <div class="dt-a"><strong>Lightweight / fast tier</strong>Claude Haiku, GPT-4o mini, Gemini Flash &mdash; 10&ndash;50x cheaper, millisecond responses</div>
+      </div>
+      <div class="dt-step">
+        <div class="dt-q">&#x1F4C4; Does it need to read 50+ page documents, codebases, or large data corpora?</div>
+        <div class="dt-arrow">&#x2192;</div>
+        <div class="dt-a"><strong>Long-context model</strong>Claude (200K tokens), Gemini 1.5 Pro (1M tokens) &mdash; built for large-document reasoning</div>
+      </div>
+      <div class="dt-step">
+        <div class="dt-q">&#x1F4BB; Is code generation, review, or debugging the primary use case?</div>
+        <div class="dt-arrow">&#x2192;</div>
+        <div class="dt-a"><strong>Code-optimized model</strong>Claude, GPT-4o, GitHub Copilot, Codestral &mdash; strong on reasoning + syntax</div>
+      </div>
+      <div class="dt-step">
+        <div class="dt-q">&#x1F5BC; Does the task involve images, audio, video, or mixed media?</div>
+        <div class="dt-arrow">&#x2192;</div>
+        <div class="dt-a"><strong>Multimodal model</strong>GPT-4o, Claude 3.5, Gemini Pro &mdash; natively handles images, PDFs, audio</div>
+      </div>
+      <div class="dt-step">
+        <div class="dt-q">&#x1F9E0; Does it require deep multi-step reasoning, math, or complex judgment?</div>
+        <div class="dt-arrow">&#x2192;</div>
+        <div class="dt-a"><strong>Reasoning-optimized model</strong>o1, o3, Claude Opus, Gemini Ultra &mdash; slower but significantly more accurate on hard problems</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:14px">&#x1F4CA; Model Landscape Overview</h3>
+    <table class="model-matrix">
+      <thead><tr><th>Model Tier</th><th>Best For</th><th>Key Strength</th><th>Watch Out For</th></tr></thead>
+      <tbody>
+        <tr><td><span class="model-tier tier-power">Power</span><br><small>Claude Opus, GPT-4o, Gemini Ultra, o1/o3</small></td><td>Complex analysis, legal review, strategy, research synthesis</td><td>Nuanced reasoning, long context, accuracy</td><td>Cost &amp; latency at scale</td></tr>
+        <tr><td><span class="model-tier tier-balanced">Balanced</span><br><small>Claude Sonnet, GPT-4o, Gemini Pro</small></td><td>Most enterprise workflows, content creation, coding</td><td>Speed + quality tradeoff, wide capability</td><td>May miss edge cases vs. Power tier</td></tr>
+        <tr><td><span class="model-tier tier-speed">Speed</span><br><small>Claude Haiku, GPT-4o mini, Gemini Flash</small></td><td>High-volume tasks, real-time apps, customer-facing triage</td><td>Fast, cheap, API-friendly</td><td>Lower accuracy on complex tasks</td></tr>
+        <tr><td><span class="model-tier tier-private">Private</span><br><small>Llama 3, Mistral, Phi-3, Qwen</small></td><td>Regulated industries, on-prem requirements, fine-tuning</td><td>Data sovereignty, customizable</td><td>Requires infra to host &amp; maintain</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:14px">&#x1F3AF; Model Scorer: Find Your Fit</h3>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px">Answer these five questions to get a tailored recommendation.</p>
+    <div class="scorer-grid">
+      <div class="scorer-item"><label>Task complexity</label><select id="sc-complexity"><option value="low">Low &mdash; simple Q&amp;A, formatting</option><option value="med" selected>Medium &mdash; drafting, summarizing</option><option value="high">High &mdash; reasoning, analysis</option></select></div>
+      <div class="scorer-item"><label>Document / context size</label><select id="sc-context"><option value="short" selected>Short (under 10 pages)</option><option value="long">Long (10&ndash;100 pages)</option><option value="massive">Massive (100+ pages / codebases)</option></select></div>
+      <div class="scorer-item"><label>Data privacy requirement</label><select id="sc-privacy"><option value="cloud" selected>Cloud API is fine</option><option value="private">Must stay on-prem / private</option></select></div>
+      <div class="scorer-item"><label>Volume &amp; cost sensitivity</label><select id="sc-volume"><option value="low" selected>Low volume &mdash; quality over cost</option><option value="high">High volume &mdash; cost is critical</option></select></div>
+      <div class="scorer-item"><label>Modality</label><select id="sc-modal"><option value="text" selected>Text only</option><option value="multi">Images / audio / mixed</option></select></div>
+      <div class="scorer-item" style="display:flex;align-items:flex-end"><button class="hero-btn" id="scoreBtn" style="width:100%">Get Recommendation &rarr;</button></div>
+    </div>
+    <div class="scorer-result" id="scorerResult" style="display:none">
+      <h4 id="scorerTier"></h4>
+      <p id="scorerDesc"></p>
+      <div class="scorer-badges" id="scorerBadges"></div>
+    </div>
+  </div>
+</div>
+
+<!-- WORKFLOW -->
+<div id="workflow" class="page">
+  <div class="step-pill">Next Level &mdash; Workflow Mapping</div>
+  <div class="sec-head"><h2>Thinking in Workflows</h2><p>Once primitives click, help teams chain them across complete workflows &mdash; preparing for an agentic future where AI handles whole projects end to end.</p></div>
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:4px">&#x1F4CB; Example: Marketing Campaign Workflow</h3>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px">Each step maps to a primitive. Teams can layer AI across the full pipeline from research to distribution.</p>
+    <div class="wf-steps">
+      <div class="wf-step"><div class="wf-num">1</div><div class="wf-content"><h4>Market &amp; Trend Research</h4><p>Use deep research to understand market trends, audience segments, and the competitive landscape.</p><span class="wf-tag">Research</span></div></div>
+      <div class="wf-step"><div class="wf-num">2</div><div class="wf-content"><h4>Audience &amp; Opportunity Sizing</h4><p>Upload CRM and market data to analyze audience size, intent signals, and revenue opportunity.</p><span class="wf-tag">Data Analysis</span></div></div>
+      <div class="wf-step"><div class="wf-num">3</div><div class="wf-content"><h4>Strategy &amp; Brief Development</h4><p>Brainstorm campaign strategy with voice mode. Upload brief and ask what's missing or weak.</p><span class="wf-tag">Ideation &amp; Strategy</span></div></div>
+      <div class="wf-step"><div class="wf-num">4</div><div class="wf-content"><h4>Content Creation at Scale</h4><p>Generate messaging, copy variations, visuals, and channel-specific assets in your brand voice.</p><span class="wf-tag">Content Creation</span></div></div>
+      <div class="wf-step"><div class="wf-num">5</div><div class="wf-content"><h4>Localization &amp; Reporting</h4><p>Automate translation, channel adaptation, and weekly performance reports for stakeholders.</p><span class="wf-tag">Automations</span></div></div>
+    </div>
+  </div>
+
+  <!-- BUILD / BUY / INTEGRATE -->
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:6px">&#x1F6E0; Build vs. Buy vs. Integrate</h3>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:16px">Matching deployment model to use case scope prevents over-engineering and under-delivering.</p>
+    <div class="bbi-grid">
+      <div class="bbi-card" style="border-color:#a7f3d0;background:#ecfdf5">
+        <div class="bbi-when" style="color:#065f46">When to Buy</div>
+        <div class="bbi-title" style="color:#065f46">&#x1F4B3; Enterprise Seat</div>
+        <ul class="bbi-list" style="color:#065f46">
+          <li>Under 50 users</li>
+          <li>General productivity tasks</li>
+          <li>No proprietary data integration</li>
+          <li>Need fast deployment</li>
+          <li>Budget under $50K/yr</li>
+        </ul>
+        <div style="font-size:11px;color:#059669;margin-top:10px;font-weight:600">Examples: ChatGPT Teams, Claude for Business, Gemini Workspace</div>
+      </div>
+      <div class="bbi-card" style="border-color:#bfdbfe;background:#eff6ff">
+        <div class="bbi-when" style="color:#1e40af">When to Integrate</div>
+        <div class="bbi-title" style="color:#1e40af">&#x1F50C; API / Plugin</div>
+        <ul class="bbi-list" style="color:#1e40af">
+          <li>Specific workflow to automate</li>
+          <li>Existing tool needs AI layer</li>
+          <li>Moderate customization required</li>
+          <li>IT team can own maintenance</li>
+          <li>$50K&ndash;$200K scope</li>
+        </ul>
+        <div style="font-size:11px;color:#2563eb;margin-top:10px;font-weight:600">Examples: Slack AI, Salesforce Einstein, HubSpot AI, custom API wrappers</div>
+      </div>
+      <div class="bbi-card" style="border-color:#ddd6fe;background:#f5f3ff">
+        <div class="bbi-when" style="color:#5b21b6">When to Build</div>
+        <div class="bbi-title" style="color:#5b21b6">&#x1F3D7; Custom System</div>
+        <ul class="bbi-list" style="color:#5b21b6">
+          <li>Proprietary data as the moat</li>
+          <li>Unique workflow not off-shelf</li>
+          <li>Scale justifies engineering cost</li>
+          <li>Competitive differentiation goal</li>
+          <li>$200K+ investment</li>
+        </ul>
+        <div style="font-size:11px;color:#7c3aed;margin-top:10px;font-weight:600">Examples: Internal RAG systems, agentic pipelines, fine-tuned industry models</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:16px">&#x2728; Use Case Development Process</h3>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:14px">A repeatable, scalable process for turning use cases into production AI. Works for any team, any org.</p>
+    <div class="checklist" id="cl2">
+      <div class="check-item" data-cl="cl2"><div class="check-box"></div><div class="check-text"><strong>1. Design:</strong> Business user defines purpose, scope, and audience in a 2-page brief.</div></div>
+      <div class="check-item" data-cl="cl2"><div class="check-box"></div><div class="check-text"><strong>2. Prepare:</strong> SME gathers relevant data to shape the use case around best practice.</div></div>
+      <div class="check-item" data-cl="cl2"><div class="check-box"></div><div class="check-text"><strong>3. Build &amp; Test:</strong> Tech lead builds the system, integrates datasets, and tests for accuracy and safety.</div></div>
+      <div class="check-item" data-cl="cl2"><div class="check-box"></div><div class="check-text"><strong>4. Launch:</strong> Full team deploys and creates a user guide for rollout.</div></div>
+      <div class="check-item" data-cl="cl2"><div class="check-box"></div><div class="check-text"><strong>5. Pivot &amp; Scale:</strong> Use feedback loops to iterate, optimize, and share across the organization.</div></div>
+    </div>
+    <div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" id="prog-cl2"></div></div><div class="prog-label" id="lbl-cl2">0 of 5 completed</div></div>
+  </div>
+
+  <div class="quote-card">
+    <div class="quote-text">&ldquo;We're looking at every business process &mdash; from legal to research, to manufacturing, to commercial &mdash; and thinking about how to redesign them with AI.&rdquo;</div>
+    <div class="quote-by">&mdash; St&eacute;phane Bancel, CEO, Moderna</div>
+  </div>
+</div>
+
+</div><!-- /.main -->
+
+<footer>
+  Built by <a href="https://hungryandmotivated.com">Bobby's Business Guide</a> &mdash; AI Use Case Discovery &bull; Model Selection &bull; Implementation Strategy
+  <br><span style="font-size:11px;opacity:.6;margin-top:4px;display:block">&#x1F4E7; Ready to run this workshop for your team? <a href="mailto:info@hungryandmotivated.com">info@hungryandmotivated.com</a></span>
+</footer>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────
+const PRIMS = [
+  {
+    num:'01', icon:'📄', title:'Content Creation',
+    desc:'Generate first drafts, copy variations, and polished output at scale. Eliminate blank-page paralysis for any team.',
+    risk:'Hallucination in facts/figures; brand voice drift; potential copyright issues with training data. Always have a human review before publishing.',
+    depts:{
+      Marketing:'Ad copy, blog posts, email campaigns, social media calendars',
+      Sales:'Personalized outreach, proposals, battle cards',
+      HR:'Job descriptions, offer letters, onboarding docs',
+      Legal:'Contract first drafts, policy summaries',
+      Engineering:'Technical documentation, release notes, runbooks',
+      Finance:'Board presentations, investor updates, commentary'
+    }
+  },
+  {
+    num:'02', icon:'🔍', title:'Research & Synthesis',
+    desc:'Condense vast information into clear, actionable summaries. Replace hours of reading with minutes of insight.',
+    risk:'Outdated training data; source hallucination (fabricated citations); overconfidence in uncertain areas. Always verify key claims against primary sources.',
+    depts:{
+      Marketing:'Competitive analysis, trend reports, audience research',
+      Sales:'Account research, industry briefings pre-call',
+      Product:'User feedback synthesis, feature gap analysis',
+      Legal:'Case law research, regulatory updates',
+      Finance:'Market research, earnings call summaries',
+      Operations:'Vendor evaluation, process benchmarking'
+    }
+  },
+  {
+    num:'03', icon:'📊', title:'Data Analysis',
+    desc:'Interpret structured and unstructured data without waiting on a data team. Surface patterns and recommendations instantly.',
+    risk:'Arithmetic errors in large datasets; sensitive data exposure if raw data is sent to a cloud API; misinterpretation of statistical significance. Use privacy-safe data samples; validate outputs.',
+    depts:{
+      Finance:'Revenue variance analysis, FP&A modeling, budget vs actual',
+      Marketing:'Campaign performance, attribution, cohort analysis',
+      Sales:'Pipeline health, win/loss patterns, quota pacing',
+      Operations:'Supply chain optimization, capacity planning',
+      HR:'Attrition risk, headcount modeling, engagement trends',
+      Product:'Usage funnel analysis, A/B test readouts'
+    }
+  },
+  {
+    num:'04', icon:'💬', title:'Communication & Coding',
+    desc:'Draft, rewrite, and localize messages — or generate, review, and debug code — tailored to any audience or platform.',
+    risk:'Code bugs that pass review; sensitive credentials in prompts; tone mismatches in sensitive communications. Test code in staging; scrub PII/secrets before pasting.',
+    depts:{
+      Engineering:'Code generation, PR reviews, debugging, test writing',
+      Marketing:'Campaign localization, tone adaptation, A/B copy testing',
+      HR:'Sensitive HR communications, manager scripts, policy updates',
+      Sales:'Follow-up emails, negotiation scripts, executive briefings',
+      Legal:'Plain-language summaries, client-facing explanations',
+      Operations:'Cross-functional announcements, status updates'
+    }
+  },
+  {
+    num:'05', icon:'🤖', title:'Ideation & Strategy',
+    desc:'Use AI as a sparring partner — brainstorm, stress-test ideas, and generate strategic options faster than any workshop.',
+    risk:'Anchoring bias from AI suggestions; echo chamber if only AI input is used; AI may not have current market context. Treat AI output as a first draft, not a final answer.',
+    depts:{
+      Product:'Feature ideation, roadmap prioritization, PRD drafts',
+      Marketing:'Campaign concepts, positioning, GTM strategy',
+      Sales:'Deal strategy, objection handling playbooks',
+      Operations:'Process redesign, cost reduction brainstorming',
+      Engineering:'Architecture decisions, tech debt sequencing',
+      Finance:'Scenario planning, M&A screening criteria'
+    }
+  },
+  {
+    num:'06', icon:'⚡', title:'Automations',
+    desc:'Chain AI steps into repeatable workflows. Eliminate manual handoffs, recurring reports, and rule-based decisions.',
+    risk:'Error propagation at scale (one bad output cascades); over-automation of decisions that need human judgment; single point of failure. Design human checkpoints at high-stakes steps.',
+    depts:{
+      Operations:'Invoice processing, approval workflows, exception handling',
+      Finance:'Close-process automation, reconciliations, report generation',
+      HR:'Recruiting pipeline screening, onboarding task routing',
+      Marketing:'Content scheduling, performance reporting, lead scoring',
+      Sales:'CRM hygiene, pipeline updates, meeting prep packets',
+      Engineering:'CI/CD summaries, incident triage, log analysis'
+    }
+  }
+];
+
+const COLORS = ['#10a37f','#f59e0b','#3b82f6','#8b5cf6','#ef4444','#ec4899'];
+
+// ─── PRIMITIVES GRID ─────────────────────────────────────────────
+function buildPrimitives(){
+  const grid = document.getElementById('primGrid');
+  if(!grid) return;
+  PRIMS.forEach((p, i) => {
+    const deptKeys = Object.keys(p.depts);
+    const card = document.createElement('div');
+    card.className = 'prim-card';
+    card.style.borderTop = '3px solid ' + COLORS[i];
+    card.innerHTML =
+      '<div class="prim-head">' +
+        '<div class="prim-num">PRIMITIVE ' + p.num + '</div>' +
+        '<div class="prim-icon">' + p.icon + '</div>' +
+        '<div class="prim-title">' + p.title + '</div>' +
+      '</div>' +
+      '<div class="prim-body" id="pb' + i + '">' +
+        '<p class="prim-desc">' + p.desc + '</p>' +
+        '<div class="risk-box"><div class="risk-box-title">⚠ Risk Flags</div><div class="risk-box-text">' + p.risk + '</div></div>' +
+        '<div class="dept-nav">' + deptKeys.map(function(d){ return '<button class="dept-btn" data-pi="' + i + '" data-dept="' + d + '">' + d + '</button>'; }).join('') + '</div>' +
+        deptKeys.map(function(d){ return '<div class="dept-panel" id="dp' + i + d.replace(/[^a-z0-9]/gi,'') + '">' + p.depts[d] + '</div>'; }).join('') +
+      '</div>';
+    card.querySelector('.prim-head').addEventListener('click', function(){
+      card.querySelector('.prim-body').classList.toggle('open');
+    });
+    card.querySelectorAll('.dept-btn').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        card.querySelectorAll('.dept-btn').forEach(function(b){ b.classList.remove('active'); });
+        card.querySelectorAll('.dept-panel').forEach(function(p){ p.classList.remove('active'); });
+        btn.classList.add('active');
+        var el = document.getElementById('dp' + btn.dataset.pi + btn.dataset.dept.replace(/[^a-z0-9]/gi,''));
+        if(el) el.classList.add('active');
+      });
+    });
+    grid.appendChild(card);
+  });
+}
+
+// ─── NAV ─────────────────────────────────────────────────────────
+function goToPage(pageId){
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.remove('active'); });
+  var page = document.getElementById(pageId);
+  if(page) page.classList.add('active');
+  var tab = document.querySelector('.nav-tab[data-page="' + pageId + '"]');
+  if(tab) tab.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+document.querySelectorAll('.nav-tab').forEach(function(tab){
+  tab.addEventListener('click', function(){ goToPage(tab.dataset.page); });
+});
+
+document.querySelectorAll('[data-goto]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var name = (document.getElementById('heroClient') || {}).value || '';
+    name = name.trim() || ((document.getElementById('navClient') || {}).value || '').trim();
+    if(name) setClient(name);
+    goToPage(btn.dataset.goto);
+  });
+});
+
+// ─── CLIENT NAME ─────────────────────────────────────────────────
+function setClient(name){
+  ['navClient','heroClient'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.value = name;
+  });
+  var badge = document.getElementById('clientBadge');
+  if(badge){
+    if(name){ badge.style.display='inline-block'; badge.textContent=name; }
+    else { badge.style.display='none'; }
+  }
+}
+['navClient','heroClient'].forEach(function(id){
+  var el = document.getElementById(id);
+  if(el) el.addEventListener('input', function(){ setClient(el.value.trim()); });
+});
+
+// ─── CHECKLISTS ───────────────────────────────────────────────────
+document.querySelectorAll('.check-item').forEach(function(item){
+  item.addEventListener('click', function(){
+    item.classList.toggle('done');
+    var box = item.querySelector('.check-box');
+    if(box) box.textContent = item.classList.contains('done') ? '✓' : '';
+    updateProgress(item.dataset.cl);
+  });
+});
+
+function updateProgress(clId){
+  var items = document.querySelectorAll('.check-item[data-cl="' + clId + '"]');
+  var done = document.querySelectorAll('.check-item[data-cl="' + clId + '"].done').length;
+  var total = items.length;
+  var fill = document.getElementById('prog-' + clId);
+  var lbl = document.getElementById('lbl-' + clId);
+  if(fill) fill.style.width = (done/total*100) + '%';
+  if(lbl) lbl.textContent = done + ' of ' + total + ' completed';
+}
+
+// ─── IMPLEMENTATION COST ESTIMATOR ───────────────────────────────
+function calcImpl(){
+  var deploy     = document.getElementById('impl-deploy').value;
+  var complexity = document.getElementById('impl-complexity').value;
+  var integ      = document.getElementById('impl-integrations').value;
+  var data       = document.getElementById('impl-data').value;
+  var compliance = document.getElementById('impl-compliance').value;
+  var ui         = document.getElementById('impl-ui').value;
+
+  // Base cost by complexity (labor-hours × blended rate)
+  var bases = { simple:5000, moderate:18000, complex:55000, enterprise:150000 };
+  var base  = bases[complexity];
+
+  // Multipliers — each dimension adds cost on top of base
+  var mDeploy  = { api:1.0, enterprise:1.2, selfhost:1.55, private:2.1 };
+  var mInteg   = { none:1.0, light:1.25, moderate:1.7, heavy:2.4 };
+  var mData    = { none:1.0, clean:1.1, messy:1.4, finetune:2.05 };
+  var mComp    = { standard:1.0, soc2:1.2, hipaa:1.55, gov:2.0 };
+  var mUI      = { none:1.0, basic:1.15, full:1.55, mobile:2.05 };
+
+  var mid  = Math.round(base * mDeploy[deploy] * mInteg[integ] * mData[data] * mComp[compliance] * mUI[ui] / 500) * 500;
+  var low  = Math.round(mid * 0.65 / 500) * 500;
+  var high = Math.round(mid * 1.55 / 500) * 500;
+
+  function fmt(n){ return n>=1000000 ? '$'+(n/1000000).toFixed(1)+'M' : n>=1000 ? '$'+(n/1000).toFixed(0)+'K' : '$'+n; }
+  document.getElementById('impl-low').textContent  = fmt(low);
+  document.getElementById('impl-mid').textContent  = fmt(mid);
+  document.getElementById('impl-high').textContent = fmt(high);
+  window._implMid = mid;
+
+  // Cost breakdown by driver (percentage weights, normalised to 100)
+  var bkMap = [
+    { label:'Engineering / build',
+      w: complexity==='simple'?35 : complexity==='moderate'?40 : 45 },
+    { label:'Integrations',
+      w: integ==='none'?0 : integ==='light'?12 : integ==='moderate'?18 : 25 },
+    { label:'Data prep',
+      w: data==='none'?0 : data==='clean'?8 : data==='messy'?16 : 28 },
+    { label:'Compliance / security',
+      w: compliance==='standard'?4 : compliance==='soc2'?10 : compliance==='hipaa'?18 : 28 },
+    { label:'UI / UX',
+      w: ui==='none'?0 : ui==='basic'?8 : ui==='full'?16 : 22 },
+    { label:'Infrastructure setup',
+      w: deploy==='api'?4 : deploy==='enterprise'?8 : deploy==='selfhost'?12 : 18 },
+    { label:'Testing & QA',        w:8 },
+    { label:'Project management',  w:5 }
+  ].filter(function(b){ return b.w > 0; });
+  var totalW = bkMap.reduce(function(a,b){ return a+b.w; },0);
+
+  var bkHtml = '<div class="impl-bk-title">Cost breakdown (approximate)</div><div class="impl-bk-bars">';
+  bkMap.forEach(function(b){
+    var pct = Math.round(b.w/totalW*100);
+    bkHtml += '<div class="impl-bk-row"><div class="impl-bk-label">'+b.label+'</div>'
+             +'<div class="impl-bk-bar-wrap"><div class="impl-bk-bar" style="width:'+pct+'%"></div>'
+             +'<div class="impl-bk-pct">'+pct+'%</div></div></div>';
+  });
+  bkHtml += '</div>';
+  document.getElementById('impl-breakdown').innerHTML = bkHtml;
+
+  // Contextual assumptions
+  var notes = [];
+  if(deploy==='api')       notes.push('Cloud API — no GPU hardware cost; model usage billed per token after launch.');
+  if(deploy==='selfhost')  notes.push('Self-hosting assumes GPU cloud rental or on-site server; adds ~$500–$3K/mo ongoing.');
+  if(deploy==='private')   notes.push('On-prem includes server procurement, networking, and dedicated DevOps overhead.');
+  if(data==='finetune')    notes.push('Fine-tuning assumes you have labeled examples; building a labeled dataset from scratch adds 30–60%.');
+  if(compliance==='hipaa') notes.push('HIPAA requires a Business Associate Agreement with your model vendor, audit logging, and encryption at rest/transit.');
+  if(compliance==='gov')   notes.push('Government deployments typically require FedRAMP-authorized services and security clearance review.');
+  if(integ==='heavy')      notes.push('Legacy integration cost can spike if APIs are undocumented — budget a discovery sprint before committing.');
+  notes.push('Rates assume US-based contractors at $100–$175/hr or equivalent internal fully-loaded cost.');
+  notes.push('Ongoing API / hosting costs excluded — typically 15–30% of implementation cost annually.');
+
+  var aHtml = '<div class="impl-assume-title">Assumptions</div><ul class="impl-assume-list">'
+            + notes.map(function(n){ return '<li>'+n+'</li>'; }).join('')
+            + '</ul>';
+  document.getElementById('impl-assumptions').innerHTML = aHtml;
+  document.getElementById('impl-results').style.display = 'block';
+}
+
+function applyToROI(){
+  if(window._implMid){
+    var el = document.getElementById('roi-impl');
+    if(el){ el.value = window._implMid; calcROI(); el.scrollIntoView({behavior:'smooth',block:'center'}); }
+  }
+}
+
+// ─── ROI ESTIMATOR ────────────────────────────────────────────────
+function calcROI(){
+  var hrs = parseFloat(document.getElementById('roi-hrs').value) || 0;
+  var ppl = parseFloat(document.getElementById('roi-ppl').value) || 0;
+  var rate = parseFloat(document.getElementById('roi-rate').value) || 0;
+  var impl = parseFloat(document.getElementById('roi-impl').value) || 0;
+  var weekly = hrs * ppl * rate;
+  var monthly = weekly * 52 / 12;
+  var annual = weekly * 52;
+  var payback = impl > 0 && monthly > 0 ? (impl / monthly) : 0;
+  var fmt = function(n){ return n >= 1000 ? '$' + (n/1000).toFixed(0) + 'K' : '$' + Math.round(n); };
+  document.getElementById('roi-monthly').textContent = fmt(monthly);
+  document.getElementById('roi-annual').textContent = fmt(annual);
+  document.getElementById('roi-payback').textContent = payback > 0 ? payback.toFixed(1) + ' mo' : 'N/A';
+}
+['roi-hrs','roi-ppl','roi-rate','roi-impl'].forEach(function(id){
+  var el = document.getElementById(id);
+  if(el) el.addEventListener('input', calcROI);
+});
+calcROI();
+
+// ─── MODEL SCORER ────────────────────────────────────────────────
+document.getElementById('scoreBtn').addEventListener('click', function(){
+  var complexity = document.getElementById('sc-complexity').value;
+  var context = document.getElementById('sc-context').value;
+  var privacy = document.getElementById('sc-privacy').value;
+  var volume = document.getElementById('sc-volume').value;
+  var modal = document.getElementById('sc-modal').value;
+
+  var tier, desc, badges;
+
+  if(privacy === 'private'){
+    tier = '🔒 Open-Source / Self-Hosted Tier';
+    desc = 'Your data cannot leave your infrastructure. Deploy an open-source model (Llama 3, Mistral, Phi-3, Qwen) on your own cloud or on-prem. You control the model, the data, and the compute.';
+    badges = ['Llama 3','Mistral','Phi-3','Qwen','Ollama'];
+  } else if(volume === 'high' && complexity === 'low'){
+    tier = '⚡ Speed / Lightweight Tier';
+    desc = 'High-volume, lower-complexity tasks call for fast, cheap models. You get millisecond responses at 10–50x lower cost than flagship models. Perfect for triage, formatting, routing, and drafting.';
+    badges = ['Claude Haiku','GPT-4o mini','Gemini Flash','Mistral 7B'];
+  } else if(context === 'massive'){
+    tier = '📄 Long-Context Power Tier';
+    desc = 'You need to read entire codebases, lengthy contracts, or large research corpora in a single pass. Choose a model with 100K+ token context windows for true document-aware reasoning.';
+    badges = ['Claude 3.5 Sonnet','Claude Opus','Gemini 1.5 Pro','GPT-4 Turbo'];
+  } else if(modal === 'multi'){
+    tier = '🖼 Multimodal Tier';
+    desc = 'Your use case involves images, PDFs with charts, audio transcription, or mixed media. Use a natively multimodal model that can see, read, and reason across formats.';
+    badges = ['GPT-4o','Claude 3.5 Sonnet','Gemini Pro','Gemini Ultra'];
+  } else if(complexity === 'high'){
+    tier = '🧠 Reasoning / Flagship Tier';
+    desc = 'Your task requires deep multi-step thinking — legal analysis, financial modeling, complex code, or strategic reasoning. Use the most capable available model even if it costs more and runs slower.';
+    badges = ['Claude Opus','o1','o3','Gemini Ultra','GPT-4o'];
+  } else {
+    tier = '⚖ Balanced Tier';
+    desc = 'Your use case sits in the sweet spot: meaningful complexity but not extreme. A mid-tier model gives you strong quality at reasonable cost and speed — the right call for most enterprise workflows.';
+    badges = ['Claude Sonnet','GPT-4o','Gemini Pro 1.5','Mistral Large'];
+  }
+
+  var result = document.getElementById('scorerResult');
+  document.getElementById('scorerTier').textContent = tier;
+  document.getElementById('scorerDesc').textContent = desc;
+  var badgesEl = document.getElementById('scorerBadges');
+  badgesEl.innerHTML = badges.map(function(b){ return '<span class="scorer-badge">' + b + '</span>'; }).join('');
+  result.style.display = 'block';
+});
+
+// ─── USE CASE TRACKER ────────────────────────────────────────────
+var useCases = [];
+var addBtn = document.getElementById('addBtn');
+var ucForm = document.getElementById('ucForm');
+var cancelBtn = document.getElementById('cancelBtn');
+var saveBtn = document.getElementById('saveBtn');
+var ucList = document.getElementById('ucList');
+
+if(addBtn) addBtn.addEventListener('click', function(){ ucForm.classList.toggle('open'); });
+if(cancelBtn) cancelBtn.addEventListener('click', function(){ ucForm.classList.remove('open'); });
+
+var QUAD = {
+  QW:{label:'Quick Win',cls:'bQW'},
+  HV:{label:'High Value',cls:'bHV'},
+  SS:{label:'Self-Service',cls:'bSS'},
+  DF:{label:'Defer',cls:'bDF'}
+};
+
+function classify(impact, effort){
+  var hi = impact >= 4, le = effort <= 2;
+  if(hi && le) return 'QW';
+  if(hi && !le) return 'HV';
+  if(!hi && le) return 'SS';
+  return 'DF';
+}
+
+function renderList(){
+  if(!ucList) return;
+  if(useCases.length === 0){
+    ucList.innerHTML = '<div class="empty-state">No use cases yet — click "+ Add Use Case" to get started.</div>';
+    return;
+  }
+  ucList.innerHTML = useCases.map(function(uc, i){
+    var q = classify(uc.impact, uc.effort);
+    var qi = QUAD[q];
+    return '<div class="uc-item">' +
+      '<div class="uc-info">' +
+        '<div class="uc-name">' + uc.name + '</div>' +
+        '<div class="uc-meta">' + uc.dept + ' &bull; Impact: ' + uc.impact + ' &bull; Effort: ' + uc.effort + (uc.notes ? ' &bull; ' + uc.notes : '') + '</div>' +
+      '</div>' +
+      '<span class="uc-badge ' + qi.cls + '">' + qi.label + '</span>' +
+      '<button class="uc-del" data-i="' + i + '">&times;</button>' +
+    '</div>';
+  }).join('');
+  ucList.querySelectorAll('.uc-del').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      useCases.splice(parseInt(btn.dataset.i), 1);
+      renderList();
+    });
+  });
+}
+
+if(saveBtn) saveBtn.addEventListener('click', function(){
+  var name = (document.getElementById('ucName') || {}).value || '';
+  name = name.trim();
+  if(!name) return;
+  useCases.push({
+    name: name,
+    dept: (document.getElementById('ucDept') || {}).value || '',
+    impact: parseInt((document.getElementById('ucImpact') || {}).value || 3),
+    effort: parseInt((document.getElementById('ucEffort') || {}).value || 3),
+    notes: ((document.getElementById('ucNotes') || {}).value || '').trim()
+  });
+  ['ucName','ucNotes'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
+  ucForm.classList.remove('open');
+  renderList();
+});
+
+// ─── INIT ────────────────────────────────────────────────────────
+buildPrimitives();
+renderList();
+</script>
+</body>
+</html>
