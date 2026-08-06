@@ -24,7 +24,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .client-input{padding:6px 11px;border:1px solid var(--gray-300);border-radius:8px;font-size:13px;width:150px;outline:none}
 .client-input:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(16,163,127,.1)}
 .client-badge{background:var(--acc);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;display:none;white-space:nowrap}
-.main{margin-top:58px}
+.main{margin-top:61px}
 .page{display:none;padding:40px 24px;max-width:920px;margin:0 auto}
 .page.active{display:block}
 
@@ -73,6 +73,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .prog-bar{background:var(--gray-200);border-radius:10px;height:5px;overflow:hidden}
 .prog-fill{background:var(--acc);height:100%;border-radius:10px;width:0;transition:width .3s}
 .prog-label{font-size:11px;color:var(--gray-500);text-align:right;margin-top:4px}
+.journey-bar{position:fixed;top:58px;left:0;right:0;height:3px;background:var(--gray-100);z-index:99}
+.journey-fill{height:100%;background:var(--acc);width:16.7%;transition:width .35s}
+.pager{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:40px;padding-top:22px;border-top:1px solid var(--gray-200);flex-wrap:wrap}
+.pager-btn{display:inline-flex;flex-direction:column;align-items:flex-start;gap:2px;border:1px solid var(--gray-300);background:#fff;border-radius:10px;padding:10px 16px;cursor:pointer;transition:all .15s;min-width:140px;text-align:left}
+.pager-btn:hover{border-color:var(--acc);box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.pager-dir{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--gray-500)}
+.pager-name{font-size:14px;font-weight:700;color:var(--gray-900)}
+.pager-btn.next{background:var(--acc);border-color:var(--acc);align-items:flex-end;text-align:right}
+.pager-btn.next .pager-dir{color:rgba(255,255,255,.7)}
+.pager-btn.next .pager-name{color:#fff}
+.pager-btn.next:hover{background:var(--acc-dark)}
+.pager-mid{flex:1;text-align:center;min-width:120px}
+.pager-step{font-size:11px;font-weight:700;color:var(--gray-600);margin-bottom:5px}
+.pager-mini{background:var(--gray-200);border-radius:10px;height:5px;max-width:180px;margin:0 auto;overflow:hidden}
+.pager-mini-fill{background:var(--acc);height:100%;border-radius:10px;transition:width .3s}
 .quote-card{background:var(--gray-900);color:#fff;border-radius:14px;padding:24px;margin-top:18px}
 .quote-text{font-size:16px;font-style:italic;line-height:1.65;margin-bottom:10px}
 .quote-by{font-size:12px;color:rgba(255,255,255,.5)}
@@ -256,10 +271,12 @@ footer a:hover{color:#6ee7b7}
     <button class="nav-tab" data-page="workflow">Workflow</button>
   </div>
   <div class="nav-right">
-    <input class="client-input" id="navClient" placeholder="Client name...">
+    <input class="client-input" id="navClient" placeholder="Team / dept...">
     <span class="client-badge" id="clientBadge"></span>
   </div>
 </nav>
+
+<div class="journey-bar"><div class="journey-fill" id="journeyFill"></div></div>
 
 <div class="main">
 
@@ -268,15 +285,15 @@ footer a:hover{color:#6ee7b7}
   <div class="hero-inner">
     <div class="hero-chip">Bobby's Business Guide</div>
     <h1>Identifying &amp; Scaling<br><em>AI Use Cases</em></h1>
-    <p class="hero-sub">A live client playbook &mdash; discover your opportunities, pick the right model, and build a roadmap that ships.</p>
+    <p class="hero-sub">An internal playbook for NYU &mdash; discover AI opportunities across your team, pick the right model, and build a roadmap that ships.</p>
     <div class="stats">
-      <div class="stat"><span class="stat-n">39%</span><div class="stat-l">of U.S. adults already use AI &mdash; vs 20% internet adoption in same window</div></div>
-      <div class="stat"><span class="stat-n">1.5x</span><div class="stat-l">faster revenue growth for AI leaders vs peers (BCG, 2024)</div></div>
-      <div class="stat"><span class="stat-n">1%</span><div class="stat-l">of companies believe AI investments have reached full maturity (McKinsey)</div></div>
+      <div class="stat"><span class="stat-n">49%</span><div class="stat-l">of U.S. adults now use AI chatbots &mdash; nearly half the country (Pew Research, 2026)</div></div>
+      <div class="stat"><span class="stat-n">1.7x</span><div class="stat-l">revenue growth for AI leaders vs laggards (BCG, 2025)</div></div>
+      <div class="stat"><span class="stat-n">1%</span><div class="stat-l">of companies say their AI deployment has reached full maturity (McKinsey)</div></div>
     </div>
     <div class="client-box">
-      <label>Personalize for your client:</label>
-      <input class="hero-inp" id="heroClient" placeholder="e.g. Acme Corp">
+      <label>Personalize for your team:</label>
+      <input class="hero-inp" id="heroClient" placeholder="e.g. Admissions, IT, HR">
       <button class="hero-btn" data-goto="discover">Start Session &rarr;</button>
     </div>
   </div>
@@ -336,8 +353,8 @@ footer a:hover{color:#6ee7b7}
   </div>
   <div class="card">
     <h3 style="font-size:16px;font-weight:700;margin-bottom:6px">&#x1F4AC; Starter Prompt for Any Role</h3>
-    <div class="prompt-wrap"><div class="prompt-code">I am a [role] at [company name]. We are evaluating AI tools<br>to improve our workflows. What are the highest-impact use<br>cases for my role, and what type of AI model would suit each?</div></div>
-    <p style="font-size:12px;color:var(--gray-500);margin-top:10px">&#x1F4A1; Swap in the client's specific role and company. Follow up to go deeper on each suggestion.</p>
+    <div class="prompt-wrap"><div class="prompt-code">I am a [role] in [department] at NYU. We are evaluating AI<br>tools to improve our workflows. What are the highest-impact<br>use cases for my role, and what type of AI model would suit each?</div></div>
+    <p style="font-size:12px;color:var(--gray-500);margin-top:10px">&#x1F4A1; Swap in your specific role and department. Follow up to go deeper on each suggestion.</p>
   </div>
   <div class="quote-card">
     <div class="quote-text">&ldquo;Every time I do something I find annoying, I ask myself: how can I not have to do this again?&rdquo;</div>
@@ -415,6 +432,7 @@ footer a:hover{color:#6ee7b7}
         <select id="impl-compliance">
           <option value="standard" selected>Standard — no special requirements</option>
           <option value="soc2">Moderate — SOC 2 / GDPR alignment</option>
+          <option value="ferpa">Higher-ed — FERPA / student records</option>
           <option value="hipaa">High — HIPAA / PCI / financial regulations</option>
           <option value="gov">Government / classified</option>
         </select>
@@ -465,7 +483,7 @@ footer a:hover{color:#6ee7b7}
     <div class="uc-form" id="ucForm">
       <div class="form-row">
         <div class="fg"><label>Use Case Name</label><input id="ucName" placeholder="e.g. Weekly report automation"></div>
-        <div class="fg"><label>Department</label><select id="ucDept"><option>Marketing</option><option>Finance</option><option>Product</option><option>Sales</option><option>Engineering</option><option>HR</option><option>Operations</option><option>Legal</option></select></div>
+        <div class="fg"><label>Department</label><select id="ucDept"><option>Admissions</option><option>Student Services</option><option>Registrar</option><option>Academic Affairs</option><option>Research Admin</option><option>Advancement</option><option>Communications &amp; Marketing</option><option>Finance</option><option>HR</option><option>IT / Engineering</option><option>Operations</option><option>Legal</option></select></div>
       </div>
       <div class="form-row">
         <div class="fg"><label>Impact (1=Minimal &rarr; 5=Transformational)</label><select id="ucImpact"><option value="5">5 &mdash; Transformational</option><option value="4">4 &mdash; High</option><option value="3" selected>3 &mdash; Medium</option><option value="2">2 &mdash; Low</option><option value="1">1 &mdash; Minimal</option></select></div>
@@ -489,45 +507,46 @@ footer a:hover{color:#6ee7b7}
       <div class="dt-step">
         <div class="dt-q">&#x1F512; Does the data need to stay on-premises or in a private cloud?</div>
         <div class="dt-arrow">&#x2192;</div>
-        <div class="dt-a"><strong>Open-source / self-hosted</strong>Llama, Mistral, Qwen, Phi &mdash; full data control, no external API calls</div>
+        <div class="dt-a"><strong>Open-source / self-hosted</strong>Llama 4, Mistral, Qwen, DeepSeek &mdash; full data control, no external API calls</div>
       </div>
       <div class="dt-step">
         <div class="dt-q">&#x26A1; Is speed and cost the primary constraint (high-volume, low-stakes tasks)?</div>
         <div class="dt-arrow">&#x2192;</div>
-        <div class="dt-a"><strong>Lightweight / fast tier</strong>Claude Haiku, GPT-4o mini, Gemini Flash &mdash; 10&ndash;50x cheaper, millisecond responses</div>
+        <div class="dt-a"><strong>Lightweight / fast tier</strong>Claude Haiku 4.5, GPT-5.6 Luna, Gemini 3 Flash &mdash; 10&ndash;50x cheaper, near-instant responses</div>
       </div>
       <div class="dt-step">
         <div class="dt-q">&#x1F4C4; Does it need to read 50+ page documents, codebases, or large data corpora?</div>
         <div class="dt-arrow">&#x2192;</div>
-        <div class="dt-a"><strong>Long-context model</strong>Claude (200K tokens), Gemini 1.5 Pro (1M tokens) &mdash; built for large-document reasoning</div>
+        <div class="dt-a"><strong>Long-context model</strong>Claude Sonnet (up to 1M tokens), Gemini 3 Pro (1M tokens) &mdash; built for large-document reasoning</div>
       </div>
       <div class="dt-step">
         <div class="dt-q">&#x1F4BB; Is code generation, review, or debugging the primary use case?</div>
         <div class="dt-arrow">&#x2192;</div>
-        <div class="dt-a"><strong>Code-optimized model</strong>Claude, GPT-4o, GitHub Copilot, Codestral &mdash; strong on reasoning + syntax</div>
+        <div class="dt-a"><strong>Code-optimized model</strong>Claude Fable 5, GPT-5.6, GitHub Copilot &mdash; strong on reasoning + syntax</div>
       </div>
       <div class="dt-step">
         <div class="dt-q">&#x1F5BC; Does the task involve images, audio, video, or mixed media?</div>
         <div class="dt-arrow">&#x2192;</div>
-        <div class="dt-a"><strong>Multimodal model</strong>GPT-4o, Claude 3.5, Gemini Pro &mdash; natively handles images, PDFs, audio</div>
+        <div class="dt-a"><strong>Multimodal model</strong>GPT-5.6, Claude Fable 5, Gemini 3 Pro &mdash; natively handles images, PDFs, audio</div>
       </div>
       <div class="dt-step">
         <div class="dt-q">&#x1F9E0; Does it require deep multi-step reasoning, math, or complex judgment?</div>
         <div class="dt-arrow">&#x2192;</div>
-        <div class="dt-a"><strong>Reasoning-optimized model</strong>o1, o3, Claude Opus, Gemini Ultra &mdash; slower but significantly more accurate on hard problems</div>
+        <div class="dt-a"><strong>Reasoning-optimized model</strong>Claude Fable 5, GPT-5.6 Sol, Gemini 3 Pro &mdash; slower but significantly more accurate on hard problems</div>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <h3 style="font-size:16px;font-weight:700;margin-bottom:14px">&#x1F4CA; Model Landscape Overview</h3>
+    <h3 style="font-size:16px;font-weight:700;margin-bottom:6px">&#x1F4CA; Model Landscape Overview</h3>
+    <p style="font-size:12px;color:var(--gray-500);margin-bottom:12px">Model names current as of August 2026 &mdash; specific models change fast, but the tiers stay stable.</p>
     <table class="model-matrix">
       <thead><tr><th>Model Tier</th><th>Best For</th><th>Key Strength</th><th>Watch Out For</th></tr></thead>
       <tbody>
-        <tr><td><span class="model-tier tier-power">Power</span><br><small>Claude Opus, GPT-4o, Gemini Ultra, o1/o3</small></td><td>Complex analysis, legal review, strategy, research synthesis</td><td>Nuanced reasoning, long context, accuracy</td><td>Cost &amp; latency at scale</td></tr>
-        <tr><td><span class="model-tier tier-balanced">Balanced</span><br><small>Claude Sonnet, GPT-4o, Gemini Pro</small></td><td>Most enterprise workflows, content creation, coding</td><td>Speed + quality tradeoff, wide capability</td><td>May miss edge cases vs. Power tier</td></tr>
-        <tr><td><span class="model-tier tier-speed">Speed</span><br><small>Claude Haiku, GPT-4o mini, Gemini Flash</small></td><td>High-volume tasks, real-time apps, customer-facing triage</td><td>Fast, cheap, API-friendly</td><td>Lower accuracy on complex tasks</td></tr>
-        <tr><td><span class="model-tier tier-private">Private</span><br><small>Llama 3, Mistral, Phi-3, Qwen</small></td><td>Regulated industries, on-prem requirements, fine-tuning</td><td>Data sovereignty, customizable</td><td>Requires infra to host &amp; maintain</td></tr>
+        <tr><td><span class="model-tier tier-power">Power</span><br><small>Claude Fable 5, Claude Opus 4.8, GPT-5.6, Gemini 3 Pro</small></td><td>Complex analysis, legal review, strategy, research synthesis</td><td>Nuanced reasoning, long context, accuracy</td><td>Cost &amp; latency at scale</td></tr>
+        <tr><td><span class="model-tier tier-balanced">Balanced</span><br><small>Claude Sonnet 4.6, GPT-5.6 Terra, Gemini 3 Pro</small></td><td>Most enterprise workflows, content creation, coding</td><td>Speed + quality tradeoff, wide capability</td><td>May miss edge cases vs. Power tier</td></tr>
+        <tr><td><span class="model-tier tier-speed">Speed</span><br><small>Claude Haiku 4.5, GPT-5.6 Luna, Gemini 3 Flash</small></td><td>High-volume tasks, real-time apps, customer-facing triage</td><td>Fast, cheap, API-friendly</td><td>Lower accuracy on complex tasks</td></tr>
+        <tr><td><span class="model-tier tier-private">Private</span><br><small>Llama 4, Mistral, Qwen, DeepSeek</small></td><td>Regulated industries, on-prem requirements, fine-tuning</td><td>Data sovereignty, customizable</td><td>Requires infra to host &amp; maintain</td></tr>
       </tbody>
     </table>
   </div>
@@ -582,7 +601,7 @@ footer a:hover{color:#6ee7b7}
           <li>Need fast deployment</li>
           <li>Budget under $50K/yr</li>
         </ul>
-        <div style="font-size:11px;color:#059669;margin-top:10px;font-weight:600">Examples: ChatGPT Teams, Claude for Business, Gemini Workspace</div>
+        <div style="font-size:11px;color:#059669;margin-top:10px;font-weight:600">Examples: ChatGPT Edu, Claude for Enterprise, Gemini for Education, Microsoft 365 Copilot</div>
       </div>
       <div class="bbi-card" style="border-color:#bfdbfe;background:#eff6ff">
         <div class="bbi-when" style="color:#1e40af">When to Integrate</div>
@@ -634,7 +653,6 @@ footer a:hover{color:#6ee7b7}
 
 <footer>
   Built by <a href="https://hungryandmotivated.com">Bobby's Business Guide</a> &mdash; AI Use Case Discovery &bull; Model Selection &bull; Implementation Strategy
-  <br><span style="font-size:11px;opacity:.6;margin-top:4px;display:block">&#x1F4E7; Ready to run this workshop for your team? <a href="mailto:info@hungryandmotivated.com">info@hungryandmotivated.com</a></span>
 </footer>
 
 <script>
@@ -760,7 +778,16 @@ function buildPrimitives(){
   });
 }
 
-// ─── NAV ─────────────────────────────────────────────────────────
+// ─── NAV + PAGE FLOW ─────────────────────────────────────────────
+var PAGE_ORDER = [
+  {id:'home',       label:'Overview'},
+  {id:'discover',   label:'Discover'},
+  {id:'primitives', label:'Primitives'},
+  {id:'prioritize', label:'Prioritize'},
+  {id:'model',      label:'Model Selection'},
+  {id:'workflow',   label:'Workflow'}
+];
+
 function goToPage(pageId){
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('.nav-tab').forEach(function(t){ t.classList.remove('active'); });
@@ -768,7 +795,30 @@ function goToPage(pageId){
   if(page) page.classList.add('active');
   var tab = document.querySelector('.nav-tab[data-page="' + pageId + '"]');
   if(tab) tab.classList.add('active');
+  var idx = PAGE_ORDER.findIndex(function(p){ return p.id === pageId; });
+  var fill = document.getElementById('journeyFill');
+  if(fill && idx >= 0) fill.style.width = ((idx+1)/PAGE_ORDER.length*100) + '%';
   window.scrollTo(0,0);
+}
+
+function buildPagers(){
+  PAGE_ORDER.forEach(function(p, i){
+    var page = document.getElementById(p.id);
+    if(!page) return;
+    var prev = PAGE_ORDER[i-1], next = PAGE_ORDER[i+1];
+    var pct = Math.round((i+1)/PAGE_ORDER.length*100);
+    var pager = document.createElement('div');
+    pager.className = 'pager';
+    pager.innerHTML =
+      (prev ? '<button class="pager-btn back" data-goto-page="'+prev.id+'"><span class="pager-dir">&larr; Back</span><span class="pager-name">'+prev.label+'</span></button>' : '<span style="min-width:140px"></span>') +
+      '<div class="pager-mid"><div class="pager-step">Step '+(i+1)+' of '+PAGE_ORDER.length+' &bull; '+pct+'% complete</div><div class="pager-mini"><div class="pager-mini-fill" style="width:'+pct+'%"></div></div></div>' +
+      (next ? '<button class="pager-btn next" data-goto-page="'+next.id+'"><span class="pager-dir">Next &rarr;</span><span class="pager-name">'+next.label+'</span></button>'
+            : '<button class="pager-btn next" data-goto-page="home"><span class="pager-dir">&#x1F389; Complete</span><span class="pager-name">Back to Overview</span></button>');
+    page.appendChild(pager);
+    pager.querySelectorAll('[data-goto-page]').forEach(function(btn){
+      btn.addEventListener('click', function(){ goToPage(btn.dataset.gotoPage); });
+    });
+  });
 }
 
 document.querySelectorAll('.nav-tab').forEach(function(tab){
@@ -838,7 +888,7 @@ function calcImpl(){
   var mDeploy  = { api:1.0, enterprise:1.2, selfhost:1.55, private:2.1 };
   var mInteg   = { none:1.0, light:1.25, moderate:1.7, heavy:2.4 };
   var mData    = { none:1.0, clean:1.1, messy:1.4, finetune:2.05 };
-  var mComp    = { standard:1.0, soc2:1.2, hipaa:1.55, gov:2.0 };
+  var mComp    = { standard:1.0, soc2:1.2, ferpa:1.35, hipaa:1.55, gov:2.0 };
   var mUI      = { none:1.0, basic:1.15, full:1.55, mobile:2.05 };
 
   var mid  = Math.round(base * mDeploy[deploy] * mInteg[integ] * mData[data] * mComp[compliance] * mUI[ui] / 500) * 500;
@@ -860,7 +910,7 @@ function calcImpl(){
     { label:'Data prep',
       w: data==='none'?0 : data==='clean'?8 : data==='messy'?16 : 28 },
     { label:'Compliance / security',
-      w: compliance==='standard'?4 : compliance==='soc2'?10 : compliance==='hipaa'?18 : 28 },
+      w: compliance==='standard'?4 : compliance==='soc2'?10 : compliance==='ferpa'?14 : compliance==='hipaa'?18 : 28 },
     { label:'UI / UX',
       w: ui==='none'?0 : ui==='basic'?8 : ui==='full'?16 : 22 },
     { label:'Infrastructure setup',
@@ -886,6 +936,7 @@ function calcImpl(){
   if(deploy==='selfhost')  notes.push('Self-hosting assumes GPU cloud rental or on-site server; adds ~$500–$3K/mo ongoing.');
   if(deploy==='private')   notes.push('On-prem includes server procurement, networking, and dedicated DevOps overhead.');
   if(data==='finetune')    notes.push('Fine-tuning assumes you have labeled examples; building a labeled dataset from scratch adds 30–60%.');
+  if(compliance==='ferpa')  notes.push('FERPA covers student education records — route the tool through IT security & procurement review before any student data touches it.');
   if(compliance==='hipaa') notes.push('HIPAA requires a Business Associate Agreement with your model vendor, audit logging, and encryption at rest/transit.');
   if(compliance==='gov')   notes.push('Government deployments typically require FedRAMP-authorized services and security clearance review.');
   if(integ==='heavy')      notes.push('Legacy integration cost can spike if APIs are undocumented — budget a discovery sprint before committing.');
@@ -939,28 +990,28 @@ document.getElementById('scoreBtn').addEventListener('click', function(){
 
   if(privacy === 'private'){
     tier = '🔒 Open-Source / Self-Hosted Tier';
-    desc = 'Your data cannot leave your infrastructure. Deploy an open-source model (Llama 3, Mistral, Phi-3, Qwen) on your own cloud or on-prem. You control the model, the data, and the compute.';
-    badges = ['Llama 3','Mistral','Phi-3','Qwen','Ollama'];
+    desc = 'Your data cannot leave your infrastructure. Deploy an open-source model (Llama 4, Mistral, Qwen, DeepSeek) on your own cloud or on-prem. You control the model, the data, and the compute.';
+    badges = ['Llama 4','Mistral','Qwen','DeepSeek','Ollama'];
   } else if(volume === 'high' && complexity === 'low'){
     tier = '⚡ Speed / Lightweight Tier';
     desc = 'High-volume, lower-complexity tasks call for fast, cheap models. You get millisecond responses at 10–50x lower cost than flagship models. Perfect for triage, formatting, routing, and drafting.';
-    badges = ['Claude Haiku','GPT-4o mini','Gemini Flash','Mistral 7B'];
+    badges = ['Claude Haiku 4.5','GPT-5.6 Luna','Gemini 3 Flash'];
   } else if(context === 'massive'){
     tier = '📄 Long-Context Power Tier';
     desc = 'You need to read entire codebases, lengthy contracts, or large research corpora in a single pass. Choose a model with 100K+ token context windows for true document-aware reasoning.';
-    badges = ['Claude 3.5 Sonnet','Claude Opus','Gemini 1.5 Pro','GPT-4 Turbo'];
+    badges = ['Claude Sonnet 4.6','Gemini 3 Pro','Claude Fable 5'];
   } else if(modal === 'multi'){
     tier = '🖼 Multimodal Tier';
     desc = 'Your use case involves images, PDFs with charts, audio transcription, or mixed media. Use a natively multimodal model that can see, read, and reason across formats.';
-    badges = ['GPT-4o','Claude 3.5 Sonnet','Gemini Pro','Gemini Ultra'];
+    badges = ['GPT-5.6','Claude Fable 5','Gemini 3 Pro'];
   } else if(complexity === 'high'){
     tier = '🧠 Reasoning / Flagship Tier';
     desc = 'Your task requires deep multi-step thinking — legal analysis, financial modeling, complex code, or strategic reasoning. Use the most capable available model even if it costs more and runs slower.';
-    badges = ['Claude Opus','o1','o3','Gemini Ultra','GPT-4o'];
+    badges = ['Claude Fable 5','GPT-5.6 Sol','Claude Opus 4.8','Gemini 3 Pro'];
   } else {
     tier = '⚖ Balanced Tier';
     desc = 'Your use case sits in the sweet spot: meaningful complexity but not extreme. A mid-tier model gives you strong quality at reasonable cost and speed — the right call for most enterprise workflows.';
-    badges = ['Claude Sonnet','GPT-4o','Gemini Pro 1.5','Mistral Large'];
+    badges = ['Claude Sonnet 4.6','GPT-5.6 Terra','Gemini 3 Pro','Mistral Large'];
   }
 
   var result = document.getElementById('scorerResult');
@@ -1041,6 +1092,7 @@ if(saveBtn) saveBtn.addEventListener('click', function(){
 
 // ─── INIT ────────────────────────────────────────────────────────
 buildPrimitives();
+buildPagers();
 renderList();
 </script>
 </body>
